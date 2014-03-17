@@ -23,9 +23,9 @@ public class LoginRequest {
 		this.passWord = password;
 	}
 	
-	public LoginRequest(String userName,String passWord){
-		
-		this.setUserName(userName);
-		this.setPassWord(passWord);
-	}
+//	public LoginRequest(String userName,String passWord){
+//		
+//		this.setUserName(userName);
+//		this.setPassWord(passWord);
+//	}
 }

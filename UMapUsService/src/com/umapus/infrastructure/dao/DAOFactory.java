@@ -1,8 +1,21 @@
 package com.umapus.infrastructure.dao;
 
+
+
+
+
+
 public class DAOFactory {
 
-	  public  LdapDao getLdapDao(){
-		   return new LdapDaoImpl();
-	  }
+	private LdapDao ldapDao;
+    
+
+	public void setLdapDao(LdapDao ldapDao) {
+		this.ldapDao = ldapDao;
+	}
+	
+	public  LdapDao getLdapDao(){
+		return  this.ldapDao;
+	}
+	
 }
