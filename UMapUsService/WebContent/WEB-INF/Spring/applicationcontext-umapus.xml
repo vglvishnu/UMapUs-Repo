@@ -15,7 +15,4 @@
 	</bean>
 	<bean id="loginRequest" class="com.umapus.domain.entity.LoginRequest" />
 	<bean id="signUpRequest" class="com.umapus.domain.entity.SignUpRequest" />
-
-
-
 </beans>
