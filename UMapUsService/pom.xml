@@ -13,6 +13,9 @@
 		<jersey.version>1.18</jersey.version>
 		<jersey.spring.version>1.8</jersey.spring.version>
 		<json.version>20090211</json.version>
+		<redis.spring.version>1.0.0.RELEASE</redis.spring.version>
+		<jedis.version>2.0.0</jedis.version>
+		<log4j.version>1.2.16</log4j.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -117,7 +120,29 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- Redis + Spring + Jedis -->
 
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${redis.spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+			<type>jar</type>
+		</dependency>
 	</dependencies>
 	<!-- <repositories> <repository> <id>springsource-milestones</id> <name>SpringSource 
 		Milestones Proxy</name> <url>https://oss.sonatype.org/content/repositories/springsource-milestones/</url> 

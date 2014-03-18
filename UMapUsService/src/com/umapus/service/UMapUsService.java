@@ -8,31 +8,30 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.umapus.domain.util.UMapUsMapper;
 import com.umapus.infrastructure.dao.DAOFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
 @Controller
 @Path("umapusservice")
+@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 public class UMapUsService {
 
-	
 	@Autowired
 	private DAOFactory daoFactory;
-	
+
 	@Autowired
 	private UMapUsMapper mapper;
-	
 
 	@POST
-	@Produces("applciation/json")
 	@Path("/login")
-	public String Login(String jsonBody, @Context HttpServletRequest req,@Context HttpServletResponse response) {
+	public String Login(String jsonBody, @Context HttpServletRequest req,
+			@Context HttpServletResponse response) {
 
 		boolean loginStatus = false;
 		String loginResponse = "{\"status\": \"IN\"}";
@@ -55,13 +54,12 @@ public class UMapUsService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-       
+
 		return loginResponse;
 	}
 
 	@POST
 	@Path("/signup")
-	@Produces("applciation/json")
 	public String SignUp(String jsonBody) {
 
 		String gid = "Success";

@@ -15,4 +15,23 @@
 	</bean>
 	<bean id="loginRequest" class="com.umapus.domain.entity.LoginRequest" />
 	<bean id="signUpRequest" class="com.umapus.domain.entity.SignUpRequest" />
+	<bean id="connectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}" />
+	<!-- Configurer that replaces ${...} placeholders with values from a properties 
+		file -->
+	<context:property-placeholder location="/WEB-INF/Spring/redis.properties" />
+	<!--  <bean id="obj" class="java.lang.Object"/> 
+	<bean id="keySerializer"
+		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+	<bean id="hashValueSerializer"
+		class="org.springframework.data.redis.serializer.GenericToStringSerializer">
+        <constructor-arg><ref bean="obj"/></constructor-arg>
+	</bean> -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="connectionFactory">
+		<!-- <property name="keySerializer" ref="keySerializer" />
+		<property name="valueSerializer" ref="hashValueSerializer" />
+		<property name="hashValueSerializer" ref="hashValueSerializer" /> -->
+	</bean>
 </beans>
