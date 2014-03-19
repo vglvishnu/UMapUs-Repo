@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
@@ -16,14 +17,23 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.umapus.domain.entity.LoginRequest;
 import com.umapus.domain.entity.SignUpRequest;
+import com.umapus.domain.entity.User;
+import com.umapus.domain.util.UMapUsMapper;
 
 @Component
 public class LdapDaoImpl implements LdapDao {
 
+	@Autowired
+	private UMapUsMapper umapusmapper;
+	
+	@Autowired
+	private User user;
+	
 
 	static final String ENV="java:comp/env";
 	static final String LDAP_JNDI ="ldap-ds";
@@ -119,10 +129,9 @@ public class LdapDaoImpl implements LdapDao {
 	}
 
 	@Override
-	public boolean LoginUser(LoginRequest loginRequest) throws NamingException {
+	public User LoginUser(LoginRequest loginRequest) throws NamingException {
 
 
-		boolean isSuccess = false;
 		String userDN = "uid=" +loginRequest.getuserName() +",dc=umapus,dc=com";
 
 		DirContext ldapCtx            = getDirContext(LDAP_JNDI);
@@ -134,13 +143,16 @@ public class LdapDaoImpl implements LdapDao {
 			environment.put(Context.SECURITY_CREDENTIALS, loginRequest.getPassWord());
 
 			DirContext dirContext = new InitialDirContext(environment);
-			isSuccess = true;
+			Attributes userAttributes = dirContext.getAttributes(userDN);
+			umapusmapper.MapDNAttributesToUser(userAttributes);
+			
+			
 		} catch (AuthenticationException e) {
 
-			isSuccess = false;
+			user.setLoggedin(false);
 
 		}
 
-		return isSuccess;
+		return user;
 	}
 }
