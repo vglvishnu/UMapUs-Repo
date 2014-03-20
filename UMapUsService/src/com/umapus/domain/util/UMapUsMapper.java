@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.umapus.domain.entity.LoginRequest;
 import com.umapus.domain.entity.SignUpRequest;
+import com.umapus.domain.entity.UMapUsConstants;
 import com.umapus.domain.entity.User;
 
 public class UMapUsMapper {
@@ -26,8 +27,8 @@ public class UMapUsMapper {
 	public LoginRequest MapJsonToLoginRequest(String jsonLoginRequest) throws JSONException{
 	  
 	   JSONObject ojson = (JSONObject) new JSONTokener(jsonLoginRequest).nextValue();
-	   loginRequest.setUserName(ojson.getString("email"));
-	   loginRequest.setPassWord(ojson.getString("passwd"));
+	   loginRequest.setUserName(ojson.getString(UMapUsConstants.JsEMAIL));
+	   loginRequest.setPassWord(ojson.getString(UMapUsConstants.JsPASSWD));
 	   return loginRequest;
 	   
    }
@@ -37,29 +38,40 @@ public class UMapUsMapper {
 	
 	    JSONObject ojson = (JSONObject) new JSONTokener(jsonSignUpRequest).nextValue();
 	    
-	    signUpRequest.setEmail(ojson.getString("email"));
-	    signUpRequest.setFamilyName(ojson.getString("familyname"));
-	    signUpRequest.setFirstName(ojson.getString("firstname"));
-	    signUpRequest.setLastName(ojson.getString("lastname"));
-	    signUpRequest.setPassWord(ojson.getString("passwd"));
+	    signUpRequest.setEmail(ojson.getString(UMapUsConstants.JsEMAIL));
+	    signUpRequest.setFamilyName(ojson.getString(UMapUsConstants.JsFAMILYNAME));
+	    signUpRequest.setFirstName(ojson.getString(UMapUsConstants.JsFAMILYNAME));
+	    signUpRequest.setLastName(ojson.getString(UMapUsConstants.JsLASTNAME));
+	    signUpRequest.setPassWord(ojson.getString(UMapUsConstants.JsPASSWD));
 	    
 	   return signUpRequest;
    }
    
    public User MapDNAttributesToUser(Attributes dnAttributes){
 	   
-	    user.setEmailId(dnAttributes.get("uid").toString());
-	    user.setEmailId(dnAttributes.get("graphid").toString());
-	    user.setEmailId(dnAttributes.get("sn").toString());
+	    user.setEmailId(dnAttributes.get(UMapUsConstants.UID).toString());
+	    user.setGraphId(dnAttributes.get(UMapUsConstants.GRAPHID).toString());
+	    user.setSurname(dnAttributes.get(UMapUsConstants.SN).toString());
 	    user.setLoggedin(true);
 	   
 	   return user;
    }
    
-   public JSONObject MakeJsonLoginResponseFromUser(User user) throws JSONException{
+   public JSONObject MakeUserToJsonLoginResponse(User user) throws JSONException{
 	   JSONObject ojson = new JSONObject();
-	   ojson.put("loginsuccess",user.isLoggedin());
+	   if (user.isLoggedin()){
+	   ojson.put("status","IN");
+	   }
 	   
 	   return ojson;
    }
+   
+   public JSONObject MakeSignUpStatusToJson(String signupstatus) throws JSONException{
+	   JSONObject ojson = new JSONObject();
+	   ojson.put("status", signupstatus);
+	   return ojson;
+	   
+   } 
+   
+   
 }

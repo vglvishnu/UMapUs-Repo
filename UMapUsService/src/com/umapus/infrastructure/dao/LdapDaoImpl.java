@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 
 import com.umapus.domain.entity.LoginRequest;
 import com.umapus.domain.entity.SignUpRequest;
+import com.umapus.domain.entity.SignUpResponse;
+import com.umapus.domain.entity.UMapUsConstants;
 import com.umapus.domain.entity.User;
 import com.umapus.domain.util.UMapUsMapper;
 
@@ -33,6 +35,7 @@ public class LdapDaoImpl implements LdapDao {
 	
 	@Autowired
 	private User user;
+	
 	
 
 	static final String ENV="java:comp/env";
@@ -58,16 +61,16 @@ public class LdapDaoImpl implements LdapDao {
 
 
 	@Override
-	public String CreateLDAPUser(SignUpRequest signuprequest) throws NamingException {
+	public String CreateLDAPUser(SignUpRequest signuprequest) throws NamingException  {
 
 
-		DirContext ldapCtx            = getDirContext(LDAP_JNDI);
+		DirContext ldapCtx            = getDirContext(UMapUsConstants.LDAP_JNDI);
 
-		NamingEnumeration<SearchResult> result = findLDAPUserByUserId(ldapCtx,ldapSearchBase,signuprequest.getEmail());
+		NamingEnumeration<SearchResult> result = findLDAPUserByUserId(ldapCtx,UMapUsConstants.LDAPSEARCHBASE,signuprequest.getEmail());
 
 		if(result.hasMoreElements()) {
 			System.out.println("User already exists");
-			return "User already exists";
+			return SignUpResponse.ALREADY_EXISTS.getStatus();
 		}
 
 
@@ -78,20 +81,20 @@ public class LdapDaoImpl implements LdapDao {
     	      }*/
 		String assign_GraphId         = UUID.randomUUID().toString();
 
-		String entryDN                = "uid="+signuprequest.getEmail()+",dc=umapus,dc=com"; 
-		Attribute cn                  = new BasicAttribute(CN, signuprequest.getEmail());  
-		Attribute sn                  = new BasicAttribute(SN, signuprequest.getFamilyName());  
-		Attribute uid                 = new BasicAttribute(UID, signuprequest.getEmail());  
-		Attribute mail                = new BasicAttribute(MAIL, signuprequest.getEmail());    
-		Attribute userPassword        = new BasicAttribute(USERPASSWORD, signuprequest.getPassWord());  
-		Attribute graphid             = new BasicAttribute(GRAPHID, assign_GraphId);  
-		Attribute oc                  = new BasicAttribute(OBJECTCLASS);
+		String entryDN                = "uid="+signuprequest.getEmail()+","+UMapUsConstants.LDAPSEARCHBASE; 
+		Attribute cn                  = new BasicAttribute(UMapUsConstants.CN, signuprequest.getEmail());  
+		Attribute sn                  = new BasicAttribute(UMapUsConstants.SN, signuprequest.getFamilyName());  
+		Attribute uid                 = new BasicAttribute(UMapUsConstants.UID, signuprequest.getEmail());  
+		Attribute mail                = new BasicAttribute(UMapUsConstants.MAIL, signuprequest.getEmail());    
+		Attribute userPassword        = new BasicAttribute(UMapUsConstants.USERPASSWORD, signuprequest.getPassWord());  
+		Attribute graphid             = new BasicAttribute(UMapUsConstants.GRAPHID, assign_GraphId);  
+		Attribute oc                  = new BasicAttribute(UMapUsConstants.OBJECTCLASS);
 
-		oc.add(TOP);  
-		oc.add(PERSON);  
-		oc.add(ORGANIZATIONALPERSON);  
-		oc.add(INETORGPERSON); 
-		oc.add(UMAPUSMEMBERS); 
+		oc.add(UMapUsConstants.TOP);  
+		oc.add(UMapUsConstants.PERSON);  
+		oc.add(UMapUsConstants.ORGANIZATIONALPERSON);  
+		oc.add(UMapUsConstants.INETORGPERSON); 
+		oc.add(UMapUsConstants.UMAPUSMEMBERS); 
 
 		BasicAttributes entry         = new BasicAttributes();  
 		entry.put(cn);  
@@ -102,23 +105,36 @@ public class LdapDaoImpl implements LdapDao {
 		entry.put(graphid);
 		entry.put(oc);
 
-		ldapCtx.createSubcontext(entryDN, entry); 
+		try {
+			ldapCtx.createSubcontext(entryDN, entry);
+		} catch (NamingException e) {
+			//TODO add log statement
+			return SignUpResponse.FAILED.getStatus();
+		} 
 
-		return assign_GraphId;
+		return SignUpResponse.SUCCESS.getStatus();
 	}
 
 	private DirContext getDirContext(String jndiName) throws NamingException{
 		Context initCtx                = null;
 		initCtx                        = new InitialContext();
-		Context envCtx                 = (Context) initCtx.lookup(ENV);
-		DirContext ldapCtx             = (DirContext) envCtx.lookup(LDAP_JNDI);
+		Context envCtx                 = (Context) initCtx.lookup(UMapUsConstants.ENV);
+		DirContext ldapCtx             = (DirContext) envCtx.lookup(UMapUsConstants.LDAP_JNDI);
 		return ldapCtx;
 	}
 
 
 	private NamingEnumeration<SearchResult> findLDAPUserByUserId(DirContext ctx, String ldapSearchBase, String userId) throws NamingException {
 
-		String searchFilter                     = "(&(objectClass=umapusmembers)(uid=" + userId + "))";
+		String searchFilter                     = "(&(" 
+		                                          +UMapUsConstants.OBJECTCLASS 
+		                                          + "=" + 
+		                                          UMapUsConstants.UMAPUSMEMBERS
+		                                          + ")(" +
+		                                          UMapUsConstants.UID 
+		                                          +"=" 
+		                                          + userId 
+		                                          + "))";
 
 		SearchControls searchControls           = new SearchControls();
 		searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
@@ -132,9 +148,9 @@ public class LdapDaoImpl implements LdapDao {
 	public User LoginUser(LoginRequest loginRequest) throws NamingException {
 
 
-		String userDN = "uid=" +loginRequest.getuserName() +",dc=umapus,dc=com";
+		String userDN = "uid=" +loginRequest.getuserName() +","+UMapUsConstants.LDAPSEARCHBASE;
 
-		DirContext ldapCtx            = getDirContext(LDAP_JNDI);
+		DirContext ldapCtx            = getDirContext(UMapUsConstants.LDAP_JNDI);
 		//ldapCtx.bind(userDN, loginRequest.getPassWord());
 		//isSuccess = true;
 		try {
