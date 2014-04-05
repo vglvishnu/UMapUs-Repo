@@ -59,6 +59,7 @@ public class UMapUsService {
 
 			if (user.isLoggedin()) {
 				HashMap<String, String> attrbs = new HashMap<String, String>();
+				System.out.println("user.getEmailId()="+user.getEmailId());
 				attrbs.put("username", user.getEmailId());
 				attrbs.put("sn", user.getSurname());
 				attrbs.put("graphid", user.getGraphId());

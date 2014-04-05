@@ -9,25 +9,25 @@
 	<context:annotation-config />
 
 	<bean id="user" class="com.umapus.domain.entity.User" />
-	
+
 	<bean id="mapper" class="com.umapus.domain.util.UMapUsMapper" />
-	
+
 	<bean id="ldapDao" class="com.umapus.infrastructure.dao.LdapDaoImpl" />
-	
+
 	<bean id="sessionRepoDao" class="com.umapus.infrastructure.dao.SessionRepositoryDaoImpl" />
-	
+
 	<bean id="daoFactory" class="com.umapus.infrastructure.dao.DAOFactory">
 		<property name="ldapDao" ref="ldapDao"></property>
 		<property name="sessionRepoDao" ref="sessionRepoDao"></property>
 	</bean>
-	
+
 	<bean id="loginRequest" class="com.umapus.domain.entity.LoginRequest" />
-	
+
 	<bean id="signUpRequest" class="com.umapus.domain.entity.SignUpRequest" />
-	
+
 	<bean id="stringRedisSerializer"
 		class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-	
+
 	<bean id="redisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"
@@ -36,8 +36,9 @@
 	<context:property-placeholder location="/WEB-INF/Spring/redis.properties" />
 
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
-		p:connection-factory-ref="redisConnectionFactory" 
-		p:keySerializer-ref="stringRedisSerializer"
-		p:hashKeySerializer-ref="stringRedisSerializer">
+		p:connection-factory-ref="redisConnectionFactory" p:keySerializer-ref="stringRedisSerializer"
+		p:hashKeySerializer-ref="stringRedisSerializer"
+		p:hashValueSerializer-ref="stringRedisSerializer"
+		p:valueSerializer-ref="stringRedisSerializer">
 	</bean>
 </beans>

@@ -24,8 +24,9 @@ public class SessionRepositoryDaoImpl implements SessionRepositoryDao {
 	private HashOperations<String, Object, Object> hashOps;
 
 	public void AddToRedis(String key, HashMap<String, String> hashvalue) {
-
+       
 		redisTemplate.opsForHash().putAll(key, hashvalue);
+		
 		redisTemplate.expire(key, UMapUsConstants.RedisKeyTTLInHrs,
 				TimeUnit.HOURS);
 

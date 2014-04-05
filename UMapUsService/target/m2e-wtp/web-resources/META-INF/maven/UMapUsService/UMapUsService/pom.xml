@@ -143,6 +143,13 @@
 			<version>${jedis.version}</version>
 			<type>jar</type>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j</artifactId>
+			<version>3.0.1.RELEASE</version>
+		</dependency>
+
 	</dependencies>
 	<!-- <repositories> <repository> <id>springsource-milestones</id> <name>SpringSource 
 		Milestones Proxy</name> <url>https://oss.sonatype.org/content/repositories/springsource-milestones/</url> 

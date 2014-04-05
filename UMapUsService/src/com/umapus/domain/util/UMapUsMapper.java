@@ -1,5 +1,6 @@
 package com.umapus.domain.util;
 
+import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
 import org.json.JSONException;
@@ -47,11 +48,13 @@ public class UMapUsMapper {
 	   return signUpRequest;
    }
    
-   public User MapDNAttributesToUser(Attributes dnAttributes){
+   public User MapDNAttributesToUser(Attributes dnAttributes) throws NamingException{
 	   
-	    user.setEmailId(dnAttributes.get(UMapUsConstants.UID).toString());
-	    user.setGraphId(dnAttributes.get(UMapUsConstants.GRAPHID).toString());
-	    user.setSurname(dnAttributes.get(UMapUsConstants.SN).toString());
+	    //user.setEmailId(dnAttributes.get(UMapUsConstants.UID).toString());	
+	    user.setEmailId(dnAttributes.get(UMapUsConstants.UID).get().toString());	
+	    //dnAttributes.get(UMapUsConstants.UID).get().toString();
+	    user.setGraphId(dnAttributes.get(UMapUsConstants.GRAPHID).get().toString());
+	    user.setSurname(dnAttributes.get(UMapUsConstants.SN).get().toString());
 	    user.setLoggedin(true);
 	   
 	   return user;
@@ -61,6 +64,8 @@ public class UMapUsMapper {
 	   JSONObject ojson = new JSONObject();
 	   if (user.isLoggedin()){
 	   ojson.put("status","IN");
+	   } else {
+		   ojson.put("status","OUT");
 	   }
 	   
 	   return ojson;
