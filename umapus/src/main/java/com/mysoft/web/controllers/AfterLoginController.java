@@ -10,10 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/UMapUSWork")
-public class HelloWorldController {
+public class AfterLoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String login(ModelMap model)
+	public String afterLogin(ModelMap model)
 	{
 		model.addAttribute("message","Shinku Tatsumaki");
 		
