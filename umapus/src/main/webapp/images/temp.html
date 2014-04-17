@@ -1,0 +1,64 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+		&times;
+	</button>
+	<h4 class="modal-title" id="myModalLabel">Add Relation</h4>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="modalname" class="col-sm-2 control-label"><span style="color:red">* </span>Name</label>
+			<div class="col-offset-1 col-sm-9">
+				<input type="text" class="form-control" id="addmodalname" placeholder="Name">
+
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="emailinmodal" class="col-sm-2 control-label"> Email </label>
+			<div class="col-offset-1 col-sm-9">
+				<input type="text" class="form-control" id="addemailinmodal" placeholder="Email">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="genderinmodal" class="col-sm-2 control-label"><span style="color:red">* </span> Gender </label>
+			<div class="col-offset-1 col-sm-9">
+				<select id="addgenderselect" class="form-control">
+					<option>Male</option>
+					<option>Female</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="modalage" class="col-sm-2 control-label"><span style="color:red">* </span>Age</label>
+			<div class="col-offset-1 col-sm-9">
+				<input type="number" class="form-control" id="addmodalage" placeholder="Age in Years">
+			</div>
+		</div>
+		<div class="checkbox" >
+			<label>
+				<input type="checkbox" id="addisPersonExpired">
+				is Person Expired ? </label>
+		</div>
+		<div class="panel-group" id="accordion">
+			<div >
+				<div class="panel-heading">
+					<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#addmoreinfo" class=""> Add more information &gt; </a></h4>
+				</div>
+				<div id="addmoreinfo" class="panel-collapse collapse out" style="height: auto;">
+					<div id="addmoreinformationcontent" class="panel-body">
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">
+		Close
+	</button>
+	<button id="AddRelationConfirm" type="button" class="btn btn-primary">
+		Add
+	</button>
+</div>
