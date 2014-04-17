@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>UMapUS</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="js/vendor/modernizr-2.7.1.min.js"></script>
+		<script src="js/Validators.js" type="text/javascript"></script>
+		<script src="js/Messages.js" type="text/javascript"></script>
+	</head>
+	<body >
+		<!--[if lt IE 8]>
+		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<!-- Add your site or application content here -->
+		<!-- <p>Hello world! This is HTML5 Boilerplate.</p> -->
+		<div id="header" class="navbar navbar-inverted navbar-fixed-top header mainpagesection container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a id="brand" href="#" class="navbar-brand" style="margin-top:-16px"> <img id="brandimg" alt="Logo" src="./img/Logo.jpg" class="img-rounded"/> </a>
+				<div class="collapse navbar-collapse" style="float:left;margin-top: 20px" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">Home</a>
+						</li>
+						<li>
+							<a href="#">My Family Tree</a>
+						</li>
+						<li>
+							<a href="#">About</a>
+						</li>
+						<li>
+							<a href="#">Contact Us</a>
+						</li>
+					</ul>
+
+				</div>
+
+				<!-- navbar-collapse -->
+
+			</div>
+			<div id="login" style="padding-top:12px;margin-right:30px">
+				<div >
+					<form class="navbar-form navbar-right"  >
+						<div class="form-group">
+							<input id="loginemail" class="form-control" type="text" placeholder="Email"/>
+
+						</div>
+						<div class="form-group">
+							<input id="loginpasswd" class="form-control" type="password" placeholder="Password"/>
+
+						</div>
+						<button class="btn btn-primary btn-md" type="submit" onclick="account.login();">
+							Log in
+						</button>
+
+					</form>
+				</div>
+				<div class="loginissues">
+					<button class="btn btn-link" type="button">
+						Trouble Singing in ?
+					</button>
+				</div>
+				<div id="loginerrpanel" class="error_msg">
+
+				</div>
+			</div>
+
+		</div>
+
+		<div id="maincontainer">
+
+			<section id="Container" class="container  ">
+
+				<div class="row panel-body ">
+					<h4> Search your family / extended family </h4>
+
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">
+								Lookup
+							</button> </span>
+					</div>
+				</div>
+
+				<div id="intro"  class="row breadcrump" >
+
+					<div  class="col-md-4 show-grid ">
+						<h1> UMapUS</h1>
+						<p>
+							Connect with your family and maintain roots
+						</p>
+
+						<p>
+							Discover extended family
+						</p>
+						</br>
+						<p>
+							Let's stay connected
+						</p>
+						</br>
+
+						<p>
+							<a class="btn btn-success btn-lg" role="button">Learn more >> </a>
+						</p>
+					</div>
+
+					<div id="signup" class="col-md-8"  >
+
+						<h2 > Sign up !!! <small> build your family network</small></h2>
+
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="familyname" class="col-sm-2 control-label"><span style="color:red">* </span>Family Name</label>
+								<div class="col-offset-1 col-sm-9">
+									<select id="familyname" class="form-control">
+										<option>-Select-</option>
+										<option>Vaithiyam</option>
+										<option>Kuttuva</option>
+										<option>Nattamai</option>
+										<option>Solai</option>
+										<option>Neelman</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="firstname" class="col-sm-2 control-label"><span style="color:red">* </span>First Name</label>
+								<div class="col-offset-1 col-sm-9">
+									<input type="text" class="form-control" id="firstname" placeholder="First Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"><span style="color:red">* </span>Last Name</label>
+								<div class="col-offset-1 col-sm-9">
+									<input type="text" class="form-control" id="lastname" placeholder="Last Name">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="emailsignup" class="col-sm-2 control-label"> <span style="color:red">* </span>Email </label>
+								<div class="col-offset-1 col-sm-9">
+									<input type="text" class="form-control" id="emailsignup" placeholder="Email">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="passwdsignup" class="col-sm-2 control-label"><span style="color:red">* </span>Password</label>
+								<div class="col-offset-1 col-sm-9">
+									<input type="password" class="form-control" id="passwdsignup" placeholder="Password">
+								</div>
+							</div>
+							<div class="col-offset-10 col-sm-2" style="float:right;margin-right:54px" >
+								<button class="btn btn-md btn-primary" onclick="account.accountSignup(event);">
+									Get started
+								</button>
+							</div>
+
+						</form>
+
+					</div>
+
+				</div>
+
+                <div style="margin-top:50px;"></div>
+				<div class="row panel panel-primary">
+					<div class="panel-heading">
+						How it works ?
+					</div>
+					<div class="panel-body">
+						<p>
+							Sign up It's free
+						</p>
+						<p>
+							Add Family as connections and create family tree
+						</p>
+						<p>
+							Start mapping and extended family
+						</p>
+						<p>
+							Invite family members
+						</p>
+						<p>
+							Family fun isn't far
+						</p>
+					</div>
+				</div>
+
+			</section>
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script>
+			window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')
+		</script>
+		<script src="js/plugins.js"></script>
+		<script src="js/main.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+
+		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+		<!--    <script>
+		(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+		function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+		e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+		e.src='//www.google-analytics.com/analytics.js';
+		r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+		ga('create','UA-XXXXX-X');ga('send','pageview');
+		</script>
+		-->
+	</body>
+
+</html>
